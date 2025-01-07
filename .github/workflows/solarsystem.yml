@@ -1,25 +1,35 @@
 name: Solar System Workflow
 
+# on push, manual(push), and on branches "main" and any that start with "feature"
 on:
   workflow_dispatch:
   push:
     branches:
       - main
       - 'feature/*'
-env:
+
+env: # set varables for the whole workflow using env variables
     MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
     MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
     MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
 
+
 jobs:
     unit-testing:
-        name: Unit testing
+        name: Unit testing  # using matrix to run tests on several version of nodeJS but excluding v18 for MacOS-latest L24
+        strategy: 
+          matrix:
+            nodejs-version: [18, 19,20]
+            operating_system: [ubuntu-latest, macos-latest]
+            exclude:
+              - nodejs-version: 18
+                operating_system: macos-latest
         runs-on: ubuntu-latest
-        steps:
+        steps:  # check out the repo using github actions
         - name: Check out Repo
           uses: actions/checkout@v4
 
-        - name: Setup NodeJS Version
+        - name: Setup NodeJS Version # set up different version of nodeJS  version 18
           uses: actions/setup-node@v4
           with:
             node-version: 18
@@ -30,7 +40,7 @@ jobs:
         - name: Unit Testing
           run: npm test
 
-        - name: Archive Test Result
+        - name: Archive Test Result #Archive/save the tests results
           uses: actions/upload-artifact@v4
           with:
             name: Mocha-Test-Result

@@ -24,15 +24,15 @@ jobs:
             exclude:
               - nodejs-version: 18
                 operating_system: macos-latest
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.operating_system }}
         steps:  # check out the repo using github actions
         - name: Check out Repo
           uses: actions/checkout@v4
 
-        - name: Setup NodeJS Version # set up different version of nodeJS  version 18
+        - name: Setup NodeJS Version ${{ matrix.nodejs-version }}  # set up different version of nodeJS  version 18
           uses: actions/setup-node@v4
           with:
-            node-version: 18
+            node-version: ${{ matrix.nodejs-version }}
 
         - name: Install Dependancies
           run: npm install

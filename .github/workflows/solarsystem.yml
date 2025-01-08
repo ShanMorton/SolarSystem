@@ -44,3 +44,4 @@ jobs:
           with:
             name: Mocha-Test-Result
             path: ./${{ matrix.os }}-${{ steps.timestamp.outputs.time }}-test-results.xml
+            # gave the file a unique name to pass all test.

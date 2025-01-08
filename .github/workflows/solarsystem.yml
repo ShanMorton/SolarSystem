@@ -45,3 +45,28 @@ jobs:
             name: Mocha-Test-Result
             path: ./${{ matrix.os }}-${{ steps.timestamp.outputs.time }}-test-results.xml
             # gave the file a unique name to pass all test.
+
+    code-coverage:
+      name: Code Coverage
+      runs-on: unbuntu-latest
+      steps:
+        - name: Check out Repo
+          uses: actions/checkout@v4
+
+        - name: Set up NodeJs Version - 18
+          uses: actions/setup-node@v4
+          with:
+            node-version: 18
+
+        - name: Install Dependancies
+          run: npm install
+
+        - name: Check Code Coverage
+          run: npm run coverage
+
+        - name: Archive Test Result
+          uses: actions/upload-artifact@v4
+          with: 
+              name: Code Coverage Result
+              path: coverage
+              retention-days: 2

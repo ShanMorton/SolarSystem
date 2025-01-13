@@ -62,7 +62,7 @@ jobs:
           run: npm install
 
         - name: Check Code Coverage
-          continue-on-error: true
+          continue-on-error: true   # continue to ru the next job even if this one fails
           run: npm run coverage
 
         - name: Archive Test Result

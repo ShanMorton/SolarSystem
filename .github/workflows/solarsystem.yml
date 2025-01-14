@@ -41,8 +41,7 @@ jobs:
           run: npm test
 
         - name: Archive Test Result #Archive/save the tests results
-          if: failure() 
-          #steps.Unit-Testing-13Jan2024-308pm.outcome == 'failure' || steps.Unit-Testing-13Jan2024-308pm.outcome == 'success'
+          if: failure() && (steps.Unit-Testing-13Jan2024-308pm.outcome == 'failure' || steps.Unit-Testing-13Jan2024-308pm.outcome == 'success')
           uses: actions/upload-artifact@v4
           with:
             name: Mocha-Test-Result

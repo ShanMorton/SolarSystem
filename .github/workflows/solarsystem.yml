@@ -27,7 +27,7 @@ jobs:
         strategy: 
           matrix:
             nodejs-version: [18, 19, 20]
-            operating_system: [ubuntu-latest, macos-latest]
+            operating_system: [ubuntu-latest]
             exclude:
               - nodejs-version: 18
                 operating_system: macos-latest
@@ -100,7 +100,7 @@ jobs:
     Docker: 
         name: Containerization
         needs: [code-coverage, unit-testing]  # "needs" is used to make sure the other jobs finish first before running this one.
-        runs-on: ubuntu-lastest
+        runs-on: ubuntu-latest
         steps:
           - name: checkout Repo
             uses: actions/checkout@v4

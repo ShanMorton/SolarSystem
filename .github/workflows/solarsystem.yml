@@ -111,5 +111,5 @@ jobs:
               username: ${{ vars.DOCKERHUB_USERNAME }}  # not your name and in lower case; fixed error
               password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-          - name: Ensure logged out
-            run: docker logout
+          #- name: Ensure logged out
+          #  run: docker logout

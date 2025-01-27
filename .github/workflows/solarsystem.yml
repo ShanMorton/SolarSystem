@@ -1,5 +1,11 @@
 name: Solar System Workflow
 
+# This workflow uses a matrix to test several OSs at the same time
+# Excludes nodejs v 18,  
+#checks out the repo, set up node, installs dependencies, unit testing, using an ID to speicifiy a
+# single job
+#
+
 # on push, manual(push), and on branches "main" and any that start with "feature"
 on:
   workflow_dispatch:
@@ -8,11 +14,13 @@ on:
       - main
       - 'feature/*'
 
+# env variable for the whole job, at this level: 
 env: # set varables for the whole workflow using env variables
     MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
     MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
     MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
 
+# 2 jobs  Unit-testing tests 5 OS's using a matrix, excluding nodeJS v18 on macOS    
 jobs:
     unit-testing:
         name: Unit testing  # using matrix to run tests on several version of nodeJS but excluding v18 for MacOS-latest L24
@@ -75,3 +83,17 @@ jobs:
               name: Code Coverage Result
               path: ./coverage
               retention-days: 1
+
+    Docker: 
+        name: Containerization
+        needs: [code-coverage, unit-testing]  # "needs" is used to make sure the other jobs finish first before running this one.
+        runs-on: ubuntu-lastest
+        steps:
+          - name: checkout Repo
+            uses: actions/checkout@v4
+
+          - name: DockerHub Login
+            uses: docker/login-action@v3
+            with:
+              username: ${{ vars.DOCKERHUB_USERNAME }}
+              password: ${{ secrets.DOCKERHUB_PASSWORD }}

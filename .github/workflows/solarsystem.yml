@@ -41,6 +41,12 @@ jobs:
           with:
             node-version: ${{ matrix.nodejs-version }}
 
+        - name: Cache NPM Dependancies
+          uses: actions/cache@v4
+          with:
+            path: ~/.npm
+            key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json')}}    
+            
         - name: Install Dependancies
           run: npm install
 
@@ -69,6 +75,13 @@ jobs:
           uses: actions/setup-node@v4
           with:
             node-version: 18
+
+        - name: Cache NPM Dependancies
+          uses: actions/cache@v4
+          with:
+            path: ~/.npm
+            key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json')}}
+
 
         - name: Install Dependancies
           run: npm install

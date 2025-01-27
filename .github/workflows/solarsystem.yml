@@ -108,5 +108,5 @@ jobs:
           - name: DockerHub Login
             uses: docker/login-action@v3
             with:
-              username: ${{ vars.DOCKERHUB_USERNAME }}
+              username: ${{ vars.DOCKERHUB_USERNAME }}  # not your name and in lower case; fixed error
               password: ${{ secrets.DOCKERHUB_PASSWORD }}

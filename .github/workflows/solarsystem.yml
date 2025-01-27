@@ -101,8 +101,7 @@ jobs:
         name: Containerization
         needs: [code-coverage, unit-testing]  # "needs" is used to make sure the other jobs finish first before running this one.
         permissions: 
-          #contents: write
-          packages: write
+          packages: write  # had to give this job permission to write packages in GitHub.
         runs-on: ubuntu-latest
         steps:
           - name: checkout Repo

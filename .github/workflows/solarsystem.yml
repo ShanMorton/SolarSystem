@@ -75,15 +75,28 @@ jobs:
 
     code-coverage:
       name: Code Coverage
+      container:  #  setting this up, we commented out L94-97
+        image: node:18
+      services:
+        mongo-db:
+          image: siddharth67/mongo-db:non-prod 
+          options: 
+              -- name mongo
+          #ports: 
+          #  - 27017:27017
+      env: # set varables for this job for the nonprod db
+        MONGO_URI: 'mongodb://mongo:27017/superData'
+        MONGO_USERNAME: non-prod-user  #  NEVER hard code credentials!!!
+        MONGO_PASSWORD: non-prod-password        
       runs-on: ubuntu-latest
       steps:
         - name: Check out Repo
           uses: actions/checkout@v4
 
-        - name: Set up NodeJs Version - 18
-          uses: actions/setup-node@v4
-          with:
-            node-version: 18
+        # - name: Set up NodeJs Version - 18
+        #   uses: actions/setup-node@v4
+        #   with:
+        #     node-version: 18
 
         - name: Cache NPM Dependancies
           uses: actions/cache@v4

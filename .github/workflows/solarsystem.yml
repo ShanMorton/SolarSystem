@@ -173,3 +173,24 @@ jobs:
               tags: |
                 ${{ vars.DOCKERHUB_USERNAME }}/solarsystem:${{ github.sha }}
                 ghcr.io/shanmorton/solarsystem:${{ github.sha }}
+
+    Dev-Deploy:
+      needs: Docker
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout Repo
+          uses: actions/checkout@v4
+
+        - name: Install KubeCTL
+          uses: azure/setup-kubectl@v4
+          with:
+             version: '<version>' # default is latest stable
+
+        - name: Confirm KubeCTL Info
+          run: |
+            kubectl version --short
+            echo -----------------------------------
+            kubectl get nodes
+
+        
+

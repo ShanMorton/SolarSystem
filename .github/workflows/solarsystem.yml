@@ -184,7 +184,7 @@ jobs:
         - name: Install KubeCTL
           uses: azure/setup-kubectl@v4
           with:
-             version: '1.32.1' # default is latest stable
+             version: '1.26.0' # default is latest stable
 
         - name: Confirm KubeCTL Info
           run: |

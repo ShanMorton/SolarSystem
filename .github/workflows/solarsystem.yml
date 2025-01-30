@@ -188,13 +188,13 @@ jobs:
 
         - name: Export Kubeconfig
           run: |
-             kubectl config view --raw > ./kubeconfig.yaml
+             kubectl config view --raw > kubeconfig.yaml
 
         - name: Upload Kubeconfig
           uses: actions/upload-artifact@v4
           with:
             name: kubeconfig
-            path: ./ubeconfig.yaml
+            path: kubeconfig.yaml
 
         - name: Confirm KubeCTL Info
           run: |

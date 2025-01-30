@@ -192,28 +192,13 @@ jobs:
             echo -----------------------------------
             kubectl get nodes
 
-        # - name: Save KubeConfig as an artifact
-        #   run: |
-        #     echo "$KUBECONFIG" > kubeconfig.yaml
-        #     env:
-        #     KUBECONFIG: ${{ secrets.KUBECONFIG }}
-        
-        # - name: Upload KubeConfig
-        #   uses: actions/upload-artifact@v3
-        #   with:
-        #     name: kubeconfig
-        #     path: kubeconfig.yaml
+        - name: Export Kubeconfig
+          run: |
+             kubectl config view --raw > kubeconfig.yaml
 
-        - name: Save Kubeconfig as Artifact
-          run: cp $KUBECONFIG kubeconfig.yaml
-          
         - name: Upload Kubeconfig
           uses: actions/upload-artifact@v4
           with:
-              name: kubeconfig
-              path: kubeconfig.yaml
-          
-
-
-        
-
+            name: kubeconfig
+            path: kubeconfig.yaml
+                   

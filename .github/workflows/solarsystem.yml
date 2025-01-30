@@ -188,7 +188,7 @@ jobs:
 
         - name: Confirm KubeCTL Info
           run: |
-            kubectl version --client
+            kubectl version --short
             echo -----------------------------------
             kubectl get nodes
 

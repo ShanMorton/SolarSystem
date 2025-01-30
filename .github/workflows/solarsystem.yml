@@ -186,11 +186,19 @@ jobs:
           with:
              version: 'v1.32.1' # default is latest stable
 
+        - name: Set up KubeConfig
+          run: |
+            echo "$KUBECONFIG" | base64 --decode > ~/.kube/config
+            chmod 600 ~/.kube/config
+          env:
+            KUBECONFIG: ${{ secrets.KUBECONFIG }}
+
         - name: Confirm KubeCTL Info
           run: |
             kubectl version --client
             echo -----------------------------------
             kubectl get nodes
+
 
         
 

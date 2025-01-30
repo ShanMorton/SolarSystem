@@ -186,18 +186,23 @@ jobs:
           with:
              version: 'v1.32.1' # default is latest stable
 
-        # - name: Set up KubeConfig
-        #   run: |
-        #     echo "$KUBECONFIG" | base64 --decode > ~/.kube/config
-        #     chmod 600 ~/.kube/config
-        #   env:
-        #     KUBECONFIG: ${{ secrets.KUBECONFIG }}
-
         - name: Confirm KubeCTL Info
           run: |
             kubectl version --client
             echo -----------------------------------
             kubectl get nodes
+
+        - name: Save KubeConfig as an artifact
+          run: |
+            echo "$KUBECONFIG" > kubeconfig.yaml
+            env:
+            KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        
+        - name: Upload KubeConfig
+          uses: actions/upload-artifact@v3
+          with:
+            name: kubeconfig
+            path: kubeconfig.yaml
 
 
         

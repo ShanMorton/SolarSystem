@@ -186,12 +186,6 @@ jobs:
           with:
              version: 'v1.32.1' # default is latest stable
 
-        - name: Confirm KubeCTL Info
-          run: |
-            kubectl version --client
-            echo -----------------------------------
-            kubectl get nodes
-
         - name: Export Kubeconfig
           run: |
              kubectl config view --raw > kubeconfig.yaml
@@ -201,4 +195,12 @@ jobs:
           with:
             name: kubeconfig
             path: kubeconfig.yaml
+
+        - name: Confirm KubeCTL Info
+          run: |
+            kubectl version --client
+            echo -----------------------------------
+            kubectl get nodes
+
+
                    
